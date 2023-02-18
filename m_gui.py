@@ -28,9 +28,8 @@ class MainScreen():
 
 
   def exitProgram(self):
+    gh.exitgui(self.globs)
     self.root.quit()
-    exit()
-
 
   def run(self):
     self.root = tk.Tk()

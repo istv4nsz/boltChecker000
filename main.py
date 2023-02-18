@@ -9,6 +9,7 @@ globs.contolFileName = 'check_control.json'
 
 ms = m_gui.MainScreen(globs)
 
+print('Exiting...')
 if globs.axApp is not None:
   ac.ExitAxisVM(globs.axApp)
 

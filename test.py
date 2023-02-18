@@ -3,10 +3,12 @@ import m_gui_handlers as gh
 from m_globs import Globs
 
 globs=Globs()
-gh.startAxisVMButton_Click(globs)
+gh.startAxisVMButton_Click(globs) # start AxisVM
 
-globs.axModel.
+pass
 
+ac.ExitAxisVM(globs.axApp)
+globs=None
 
 # if globs.axApp is not None:
 #   ac.ExitAxisVM(globs.axApp)

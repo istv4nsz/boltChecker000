@@ -36,8 +36,7 @@ def StartAxisVM():
   if axApp is not None:
     if WaitForAxisVM_loaded(axApp):
       InitAxisVM(axApp)
-      axModel = axApp.Models.Item(1)
-      return axApp, axModel
+      return axApp
   return None
 
 # does not work :(
