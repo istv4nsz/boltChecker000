@@ -1,10 +1,11 @@
 import tkinter as tk
 import m_gui_handlers as gh
 from m_bolt_checker import BoltCheckInputData
+from m_globs import Globs
 
 class MainScreen():
 
-  def __init__(self, globs):
+  def __init__(self, globs:Globs):
     self.bcid = BoltCheckInputData()
     # bolt_dia_mm = '16'                     #1
     # bolt_fyb_MPa = '640'                   #2

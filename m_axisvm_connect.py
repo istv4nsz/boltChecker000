@@ -5,7 +5,6 @@ import comtypes.client as cc
 from time import sleep
 import comtypes.gen._0AA46C32_04EF_46E3_B0E4_D2DA28D0AB08_0_15_401 as ax
 
-
 #Axis = main.Axis
 AX_APP_PROGID = 'AxisVM.AxisVMApplication'
 
@@ -34,11 +33,12 @@ def StartAxisVM():
     axApp = cc.CreateObject(AX_APP_PROGID, comtypes.CLSCTX_ALL, None, ax.IAxisVMApplication)
   except:
     sys.exit(errno.EACCES)
-  if not axApp is None:
-    WaitForAxisVM_loaded(axApp)
-    return axApp
-  if axApp is None:
-    return None
+  if axApp is not None:
+    if WaitForAxisVM_loaded(axApp):
+      InitAxisVM(axApp)
+      axModel = axApp.Models.Item(1)
+      return axApp, axModel
+  return None
 
 # does not work :(
 #

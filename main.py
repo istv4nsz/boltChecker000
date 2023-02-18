@@ -1,12 +1,9 @@
 import os
 import m_gui
 import m_axisvm_connect as ac
-
-class Globs:
-  pass
+from m_globs import Globs
 
 globs=Globs()
-globs.axApp = None
 globs.pwd = os.getcwd()
 globs.contolFileName = 'check_control.json'
 
