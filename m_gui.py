@@ -199,7 +199,7 @@ class MainScreen():
 
     # ***************
     self.showControlFileButton = tk.Button(self.frm3, text="Show control file",
-                                           command=lambda : gh.showControlFileButton_Click(self.globs))
+                                           command=lambda : gh.showControlFileButton_Click())
     self.showControlFileButton.grid(row=1, column=0, sticky= "we")
 
     self.performChecksButton = tk.Button(self.frm3, text="Perform checks",

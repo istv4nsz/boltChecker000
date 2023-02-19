@@ -22,9 +22,9 @@ class BoltCheckInputData:
 class Bolt:
 
   def __init__(self, dia_mm=20, fyb_MPa=600, fub_MPa=800):
-    self.dia_mm = dia_mm
-    self.fyb_MPa = fyb_MPa
-    self.fub_MPa = fub_MPa
+    self.dia_mm = int(dia_mm)
+    self.fyb_MPa = float(fyb_MPa)
+    self.fub_MPa = float(fub_MPa)
     self.holeDia_mm = self.getHoleDia_mm(dia_mm)
     self.shearArea_mm2 = self.getShearArea_mm2(dia_mm)
     self.diaBM_mm = self.getDiaBM_mm(dia_mm)
@@ -79,20 +79,20 @@ class Bolt:
 class BaseMat:
 
   def __init__(self, fy_MPa=235, fu_MPa=360, t_mm=10):
-    self.fy_MPa = fy_MPa
-    self.fu_MPa = fu_MPa
-    self.t_mm = t_mm
+    self.fy_MPa = float(fy_MPa)
+    self.fu_MPa = float(fu_MPa)
+    self.t_mm = float(t_mm)
 
 
 class GeomDef:
 
   def __init__(self, e1_mm=30, e2_mm=30, p1_mm=60, p2_mm=60, no_shearplane=1, no_bolt=1):
-    self.e1_mm = e1_mm
-    self.e2_mm = e2_mm
-    self.p1_mm = p1_mm
-    self.p2_mm = p2_mm
-    self.no_shearplane = no_shearplane
-    self.no_bolt = no_bolt
+    self.e1_mm = float(e1_mm)
+    self.e2_mm = float(e2_mm)
+    self.p1_mm = float(p1_mm)
+    self.p2_mm = float(p2_mm)
+    self.no_shearplane = int(no_shearplane)
+    self.no_bolt = int(no_bolt)
 
   @staticmethod  # -- EN 1993-1-8:2005 minimum values, Table 3.3
   def get_e1_EC_min_dist_mm(db0):
@@ -130,9 +130,9 @@ class GeomDef:
 class BoltCheck:
 
   def __init__(self, gM2=1.25, bShearAtThread=True, bBoltDistCheckStrict=True):
-    self.gM2 = gM2
-    self.bShearAtThread = bShearAtThread
-    self.bBoltDistCheckStrict = bBoltDistCheckStrict
+    self.gM2 = float(gM2)
+    self.bShearAtThread = bool(bShearAtThread)
+    self.bBoltDistCheckStrict = bool(bBoltDistCheckStrict)
 
 
   def F_bv_Rd_N(self,bolt:Bolt):

@@ -4,8 +4,6 @@ import m_axisvm_connect as ac
 from m_globs import Globs
 
 globs=Globs()
-globs.pwd = os.getcwd()
-globs.contolFileName = 'check_control.json'
 
 ms = m_gui.MainScreen(globs)
 
