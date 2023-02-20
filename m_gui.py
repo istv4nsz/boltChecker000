@@ -27,13 +27,33 @@ class MainScreen():
     self.run()
 
 
-  def exitProgram(self):
-    gh.exitgui(self.globs)
+  def fExitProgram(self):
+    gh.exitAxisVM(self.globs)
     self.root.quit()
+
+
+  def fGenForSelectedButton(self):
+    self.bcid.bolt_dia_mm = int(self.i01entry.get())
+    self.bcid.bolt_fyb_MPa = float(self.i02entry.get())
+    self.bcid.bolt_fub_MPa = float(self.i03entry.get())
+    self.bcid.basemat_t_mm = float(self.i04entry.get())
+    self.bcid.basemat_fy_MPa = float(self.i05entry.get())
+    self.bcid.basemat_fu_MPa = float(self.i06entry.get())
+    self.bcid.geom_e1_mm = float(self.i07entry.get())
+    self.bcid.geom_e2_mm = float(self.i08entry.get())
+    self.bcid.geom_p1_mm = float(self.i09entry.get())
+    self.bcid.geom_p2_mm = float(self.i10entry.get())
+    self.bcid.geom_no_shearplane = int(self.i11entry.get())
+    self.bcid.geom_no_bolt = int(self.i12entry.get())
+    self.bcid.boltcheck_gM2 = float(self.i13entry.get())
+    self.bcid.boltcheck_bShearAtThread = bool(self.i14var.get())
+    self.bcid.boltcheck_bBoltDistCheckStrict = bool(self.i15var.get())
+    gh.genForSelectedButton_Click(self.bcid, self.globs)
+
 
   def run(self):
     self.root = tk.Tk()
-    self.root.protocol('WM_DELETE_WINDOW', self.exitProgram)
+    self.root.protocol('WM_DELETE_WINDOW', self.fExitProgram)
     self.root.wm_title('Checking metric bolts')
     self.root.columnconfigure(0, weight=1)
 
@@ -45,7 +65,7 @@ class MainScreen():
                         font="{Lucida Console} 8",
                         width=100, height=5,
                         relief=tk.FLAT)
-    self.txt1.insert('1.0', "Text comes here...")
+    self.txt1.insert('1.0', "Help text comes here...")
     self.txt1.grid(row=0, column=0, sticky='we')
     self.frm1.columnconfigure(0, weight=1)
 
@@ -53,7 +73,7 @@ class MainScreen():
     self.startAxisVMButton.grid(row=1, column=0, sticky= "we")
 
     self.genForSelectedButton = tk.Button(self.frm1, text="Generate contol file for selected links",
-                                          command=lambda : gh.genForSelectedButton_Click(self.bcid, self.globs))
+                                          command=self.fGenForSelectedButton)
     self.genForSelectedButton.grid(row=2, column=0, sticky="we")
 
     # ---------------------------------------------------------------- frm2 ---
@@ -61,139 +81,137 @@ class MainScreen():
     self.frm2.grid(row=1, sticky='we')
 
     # ***************
-    self.lbl1 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Bolt diameter [mm]:')
-    self.lbl1.grid(row=0, column=0, sticky='w')
+    self.i01label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Bolt diameter [mm]:')
+    self.i01label.grid(row=0, column=0, sticky='w')
 
-    self.entry1 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry1.insert(0, str(self.bcid.bolt_dia_mm))
-    self.entry1.grid(row=0, column=1, sticky='we')
-
-    # ***************
-    self.lbl2 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Bolt fyb [MPa]:')
-    self.lbl2.grid(row=1, column=0, sticky='w')
-
-    self.entry2 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry2.insert(0, str(self.bcid.bolt_fyb_MPa))
-    self.entry2.grid(row=1, column=1, sticky='we')
+    self.i01entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i01entry.insert(0, str(self.bcid.bolt_dia_mm))
+    self.i01entry.grid(row=0, column=1, sticky='we')
 
     # ***************
-    self.lbl3 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Bolt fub [MPa]:')
-    self.lbl3.grid(row=2, column=0, sticky='w')
+    self.i02label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Bolt fyb [MPa]:')
+    self.i02label.grid(row=1, column=0, sticky='w')
 
-    self.entry3 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry3.insert(0, str(self.bcid.bolt_fub_MPa))
-    self.entry3.grid(row=2, column=1, sticky='we')
-
-    # ***************
-    self.lbl4 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Base mat. thick. [mm]:')
-    self.lbl4.grid(row=3, column=0, sticky='w')
-
-    self.entry4 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry4.insert(0, str(self.bcid.basemat_t_mm))
-    self.entry4.grid(row=3, column=1, sticky='we')
+    self.i02entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i02entry.insert(0, str(self.bcid.bolt_fyb_MPa))
+    self.i02entry.grid(row=1, column=1, sticky='we')
 
     # ***************
-    self.lbl5 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Base mat. fy [MPa]:')
-    self.lbl5.grid(row=4, column=0, sticky='w')
+    self.i03label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Bolt fub [MPa]:')
+    self.i03label.grid(row=2, column=0, sticky='w')
 
-    self.entry5 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry5.insert(0, str(self.bcid.basemat_fy_MPa))
-    self.entry5.grid(row=4, column=1, sticky='we')
-
-    # ***************
-    self.lbl6 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Base mat. fu [MPa]:')
-    self.lbl6.grid(row=5, column=0, sticky='w')
-
-    self.entry6 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry6.insert(0, str(self.bcid.basemat_fu_MPa))
-    self.entry6.grid(row=5, column=1, sticky='we')
+    self.i03entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i03entry.insert(0, str(self.bcid.bolt_fub_MPa))
+    self.i03entry.grid(row=2, column=1, sticky='we')
 
     # ***************
-    self.lbl7 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Geometry e1 [mm]:')
-    self.lbl7.grid(row=6, column=0, sticky='w')
+    self.i04label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Base mat. thick. [mm]:')
+    self.i04label.grid(row=3, column=0, sticky='w')
 
-    self.entry7 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry7.insert(0, str(self.bcid.geom_e1_mm))
-    self.entry7.grid(row=6, column=1, sticky='we')
-
-    # ***************
-    self.lbl8 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Geometry e2 [mm]:')
-    self.lbl8.grid(row=7, column=0, sticky='w')
-
-    self.entry8 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry8.insert(0, str(self.bcid.geom_e2_mm))
-    self.entry8.grid(row=7, column=1, sticky='we')
+    self.i04entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i04entry.insert(0, str(self.bcid.basemat_t_mm))
+    self.i04entry.grid(row=3, column=1, sticky='we')
 
     # ***************
-    self.lbl9 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Geometry p1 [mm]:')
-    self.lbl9.grid(row=8, column=0, sticky='w')
+    self.i05label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Base mat. fy [MPa]:')
+    self.i05label.grid(row=4, column=0, sticky='w')
 
-    self.entry9 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry9.insert(0, str(self.bcid.geom_p1_mm))
-    self.entry9.grid(row=8, column=1, sticky='we')
-
-    # ***************
-    self.lbl10 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Geometry p2 [mm]:')
-    self.lbl10.grid(row=9, column=0, sticky='w')
-
-    self.entry10 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry10.insert(0, str(self.bcid.geom_p2_mm))
-    self.entry10.grid(row=9, column=1, sticky='we')
+    self.i05entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i05entry.insert(0, str(self.bcid.basemat_fy_MPa))
+    self.i05entry.grid(row=4, column=1, sticky='we')
 
     # ***************
-    self.lbl11 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Number of shearplanes:')
-    self.lbl11.grid(row=10, column=0, sticky='w')
+    self.i06label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Base mat. fu [MPa]:')
+    self.i06label.grid(row=5, column=0, sticky='w')
 
-    self.entry11 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry11.insert(0, str(self.bcid.geom_no_shearplane))
-    self.entry11.grid(row=10, column=1, sticky='we')
-
-    # ***************
-    self.lbl12 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Number of bolts:')
-    self.lbl12.grid(row=11, column=0, sticky='w')
-
-    self.entry12 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry12.insert(0, str(self.bcid.geom_no_bolt))
-    self.entry12.grid(row=11, column=1, sticky='we')
+    self.i06entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i06entry.insert(0, str(self.bcid.basemat_fu_MPa))
+    self.i06entry.grid(row=5, column=1, sticky='we')
 
     # ***************
-    self.lbl13 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Gamma_M2:')
-    self.lbl13.grid(row=11, column=0, sticky='w')
+    self.i07label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Geometry e1 [mm]:')
+    self.i07label.grid(row=6, column=0, sticky='w')
 
-    self.entry13 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry13.insert(0, str(self.bcid.boltcheck_gM2))
-    self.entry13.grid(row=11, column=1, sticky='we')
+    self.i07entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i07entry.insert(0, str(self.bcid.geom_e1_mm))
+    self.i07entry.grid(row=6, column=1, sticky='we')
 
     # ***************
-    self.lbl14 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Shear at thread:')
-    self.lbl14.grid(row=12, column=0, sticky='w')
+    self.i08label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Geometry e2 [mm]:')
+    self.i08label.grid(row=7, column=0, sticky='w')
 
-    xbShearAtThread = tk.BooleanVar(value=self.bcid.boltcheck_bShearAtThread)
+    self.i08entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i08entry.insert(0, str(self.bcid.geom_e2_mm))
+    self.i08entry.grid(row=7, column=1, sticky='we')
 
-    self.entry14 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry14 = tk.Checkbutton(self.frm2,
-                                  variable=xbShearAtThread,
+    # ***************
+    self.i09label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Geometry p1 [mm]:')
+    self.i09label.grid(row=8, column=0, sticky='w')
+
+    self.i09entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i09entry.insert(0, str(self.bcid.geom_p1_mm))
+    self.i09entry.grid(row=8, column=1, sticky='we')
+
+    # ***************
+    self.i10label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Geometry p2 [mm]:')
+    self.i10label.grid(row=9, column=0, sticky='w')
+
+    self.i10entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i10entry.insert(0, str(self.bcid.geom_p2_mm))
+    self.i10entry.grid(row=9, column=1, sticky='we')
+
+    # ***************
+    self.i11label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Number of shearplanes:')
+    self.i11label.grid(row=10, column=0, sticky='w')
+
+    self.i11entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i11entry.insert(0, str(self.bcid.geom_no_shearplane))
+    self.i11entry.grid(row=10, column=1, sticky='we')
+
+    # ***************
+    self.i12label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Number of bolts:')
+    self.i12label.grid(row=11, column=0, sticky='w')
+
+    self.i12entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i12entry.insert(0, str(self.bcid.geom_no_bolt))
+    self.i12entry.grid(row=11, column=1, sticky='we')
+
+    # ***************
+    self.i13label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Gamma_M2:')
+    self.i13label.grid(row=11, column=0, sticky='w')
+
+    self.i13entry = tk.Entry(self.frm2, font="{Lucida Console} 8")
+    self.i13entry.insert(0, str(self.bcid.boltcheck_gM2))
+    self.i13entry.grid(row=11, column=1, sticky='we')
+
+    # ***************
+    self.i14label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Shear at thread:')
+    self.i14label.grid(row=12, column=0, sticky='w')
+
+    self.i14var = tk.BooleanVar(value=self.bcid.boltcheck_bShearAtThread)
+
+    self.i14chkb = tk.Checkbutton(self.frm2,
+                                  variable=self.i14var,
                                   onvalue=True,
                                   offvalue=False)
-    self.entry14.grid(row=12, column=1, sticky='w')
+    self.i14chkb.grid(row=12, column=1, sticky='w')
 
     # ***************
-    self.lbl15 = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Strict check of bolt distances:')
-    self.lbl15.grid(row=13, column=0, sticky='w')
+    self.i15label = tk.Label(self.frm2, bg='grey95', font="{Lucida Console} 8", text='Strict check of bolt distances:')
+    self.i15label.grid(row=13, column=0, sticky='w')
 
-    xbBoltDistCheckStrict = tk.BooleanVar(value=self.bcid.boltcheck_bBoltDistCheckStrict)
+    self.i15var = tk.BooleanVar(value=self.bcid.boltcheck_bBoltDistCheckStrict)
 
-    self.entry15 = tk.Entry(self.frm2, font="{Lucida Console} 8")
-    self.entry15 = tk.Checkbutton(self.frm2,
-                                  variable=xbBoltDistCheckStrict,
-                                  onvalue=True,
-                                  offvalue=False)
-    self.entry15.grid(row=13, column=1, sticky='w')
+    self.i15entry = tk.Checkbutton(self.frm2,
+                                   variable=self.i15var,
+                                   onvalue=True,
+                                   offvalue=False)
+    self.i15entry.grid(row=13, column=1, sticky='w')
 
     self.frm2.columnconfigure(0, weight=1)
     self.frm2.columnconfigure(1, weight=20)
 
-    # ---------------------------------------------------------------- frm2 ---
+    # ---------------------------------------------------------------- frm3 ---
     self.frm3 = tk.Frame(self.root)
     self.frm3.grid(row=2, column=0, sticky='we')
 
@@ -211,7 +229,7 @@ class MainScreen():
     self.showResultFileButton.grid(row=3, column=0, sticky= "we")
 
     self.exitButton = tk.Button(self.frm3, text="Exit program",
-                                command=self.exitProgram)
+                                command=self.fExitProgram)
     self.exitButton.grid(row=4, column=0, sticky= "we")
 
     self.frm3.columnconfigure(0, weight=1)

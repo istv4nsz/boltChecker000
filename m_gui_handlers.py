@@ -9,13 +9,25 @@ import m_axisvm_api_functions_wrapper as axw
 from tkinter import messagebox
 
 
-def exitgui(globs:Globs):
+
+def exitAxisVM(globs:Globs):
+  """
+  Exiting AxisVM
+  :param globs:
+  :return:
+  """
   if globs.axApp is not None:
     ac.ExitAxisVM(globs.axApp)
   globs.axApp = None
 
 
+
 def startAxisVMButton_Click(globs:Globs):
+  """
+  Starting new AxisVM program instance and placing the COM pointer of AxisVMApplication in globs.axApp
+  :param globs:
+  :return:
+  """
   print('startAxisVMButton_Click')
   globs.axApp = ac.StartAxisVM()
   if globs.axApp is None:
@@ -27,9 +39,18 @@ def startAxisVMButton_Click(globs:Globs):
   print('...function end')
 
 
+
 def genForSelectedButton_Click(bcid:bc.BoltCheckInputData, globs:Globs):
+  """
+  Generating control json file for the link elements that are currently selected in AxisVM
+  :param bcid:
+  :param globs:
+  :return:
+  """
   print('genForSelectedButton_Click')
+  #--- getting selected link elements
   tupl_of_nodes, nof_nodes = axw.linkElements_GetSelectedItemIds(globs.axApp)
+  #--- writting to json file if successful
   if (nof_nodes is not None) and (nof_nodes != 0):
     jsonDict={}
     for n in tupl_of_nodes:
@@ -47,13 +68,27 @@ def genForSelectedButton_Click(bcid:bc.BoltCheckInputData, globs:Globs):
   print('...function end')
 
 
+
 def showControlFileButton_Click():
+  """
+  Opening the control.json file in the OS default program
+  :return:
+  """
   print('showControlFileButton_Click')
   webbrowser.open('control.json')
   print('...function end')
 
 
+
 def performChecksButton_Click(globs):
+  """
+  1) Calculating the resistance force values for each bolt/link element read from the
+  control.json file
+  2) Reading the corresponding forces from AxisVM
+  3) Making comparisons between resistances and acting forces
+  :param globs:
+  :return:
+  """
   print('performChecksButton_Click')
   #1 --- loading json
   print('...open control json')
@@ -106,6 +141,7 @@ def performChecksButton_Click(globs):
       result['result'] = 'AxisVM error'
 
     else:
+      #3 --- making comparisons between resistance and acting forces
       F_t_Ed_N = 1000.0 * flocZ_kN
       F_v_Ed_N = 1000.0 * (flocX_kN**2 + flocY_kN**2)**0.5
       result['F_t_Ed_N']=F_t_Ed_N
@@ -134,7 +170,13 @@ def performChecksButton_Click(globs):
   print('...function end')
 
 
+
 def showResultFileButton_Click(globs):
+  """
+  Opening the results.json file in the OS default application
+  :param globs:
+  :return:
+  """
   print('showResultFileButton_Click')
   webbrowser.open('results.json')
   print('...function end')
