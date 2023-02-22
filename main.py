@@ -9,6 +9,6 @@ ms = m_gui.MainScreen(globs)
 
 print('Exiting...')
 if globs.axApp is not None:
-  ac.ExitAxisVM(globs.axApp)
+    ac.ExitAxisVM(globs.axApp)
 
 globs=None

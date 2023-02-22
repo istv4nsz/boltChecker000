@@ -10,34 +10,34 @@ AX_APP_PROGID = 'AxisVM.AxisVMApplication'
 
 
 def WaitForAxisVM_loaded(aAxApp):
-  # wait until AxisVM is loaded
-  try:
-    while aAxApp.Loaded == ax.lbFalse:
-      sleep(0.1)  # wait 100 ms
-    return True
-  except:
-    return False
+    # wait until AxisVM is loaded
+    try:
+        while aAxApp.Loaded == ax.lbFalse:
+            sleep(0.1)  # wait 100 ms
+        return True
+    except:
+        return False
 
 
 def InitAxisVM(aAxApp):
-  aAxApp.Visible = ax.lbTrue  # AxisVM starts hidden, so make it visible
-  aAxApp.CloseOnLastReleased = ax.lbFalse  # Do not close AxisVM after this code
-  aAxApp.AskCloseOnLastReleased = ax.lbTrue  # Ask whether close AxisVM after this code
-  aAxApp.AskSaveOnLastReleased = ax.lbTrue
-  aAxApp.ApplicationClose = ax.acEnableNoWarning
+    aAxApp.Visible = ax.lbTrue  # AxisVM starts hidden, so make it visible
+    aAxApp.CloseOnLastReleased = ax.lbFalse  # Do not close AxisVM after this code
+    aAxApp.AskCloseOnLastReleased = ax.lbTrue  # Ask whether close AxisVM after this code
+    aAxApp.AskSaveOnLastReleased = ax.lbTrue
+    aAxApp.ApplicationClose = ax.acEnableNoWarning
 
 
 def StartAxisVM():
-  axApp = None
-  try:
-    axApp = cc.CreateObject(AX_APP_PROGID, comtypes.CLSCTX_ALL, None, ax.IAxisVMApplication)
-  except:
-    sys.exit(errno.EACCES)
-  if axApp is not None:
-    if WaitForAxisVM_loaded(axApp):
-      InitAxisVM(axApp)
-      return axApp
-  return None
+    axApp = None
+    try:
+        axApp = cc.CreateObject(AX_APP_PROGID, comtypes.CLSCTX_ALL, None, ax.IAxisVMApplication)
+    except:
+        sys.exit(errno.EACCES)
+    if axApp is not None:
+        if WaitForAxisVM_loaded(axApp):
+            InitAxisVM(axApp)
+            return axApp
+    return None
 
 # does not work :(
 #
@@ -57,7 +57,7 @@ def StartAxisVM():
 
 
 def ExitAxisVM(axApp):
-  axApp.ApplicationClose = ax.acEnableNoWarning
-  axApp.AskSaveOnLastReleased = ax.lbFalse
-  axApp.Quit()
-  axApp = None
+    axApp.ApplicationClose = ax.acEnableNoWarning
+    axApp.AskSaveOnLastReleased = ax.lbFalse
+    axApp.Quit()
+    axApp = None
