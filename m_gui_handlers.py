@@ -77,6 +77,9 @@ def showControlFileButton_Click():
 
 def performChecksButton_Click(globs):
     """
+    Performing the checks between resistance and loading values
+
+    The steps implemented in this function are the following:
     1) Calculating the resistance force values for each bolt/link element read from the
     control.json file
     2) Reading the corresponding forces from AxisVM
